@@ -8,7 +8,15 @@ CREATE TABLE tasks (
     taskDate date,
     taskStatus ENUM("complete", "incomplete", "recorded")
     );
-
+    
+ALTER TABLE tasks
+ADD COLUMN isEditing BOOL;
+    
+INSERT INTO tasks (task, taskDate, taskStatus, isEditing, wrapperId, taskForDate)
+    VALUES ("test task", NOW(), "incomplete", false, 1, "2024-06-22");
+  --  `, [task, id, forDate])
+    
+    
 UPDATE tasks
 SET taskForDate = "2024-04-19" WHERE taskId = 4;
 
@@ -37,6 +45,10 @@ CREATE TABLE wrappers (
     wrapperName VARCHAR(25),
     wrapperType ENUM("Classes", "Extracurriculars", "Personal")
 );
+
+INSERT INTO wrappers (wrapperName, wrapperType, wrapperStatus)
+VALUES
+("Test List", "Personal", "active");
 
 UPDATE wrappers
 SET wrapperStatus = "active" WHERE wrapperId > 0;
