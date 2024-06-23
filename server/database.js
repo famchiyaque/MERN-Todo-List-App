@@ -16,6 +16,29 @@ const pool2 = mysql.createPool({
     database: process.env.MYSQL_DATABASE_2
 }).promise()
 
+export async function login(user) {
+    try {
+        const [rows] = await pool.query(`
+            SELECT * FROM Users
+            WHERE Username = ?
+            `, [user])
+            if (rows.length > 0) {
+                const { Username, Pass, Keyword } = rows[0]
+                const data = {
+                    "Username": Username,
+                    "Pass": Pass,
+                    "Keyword": Keyword
+                }
+            
+                return data
+            } else {
+                return null
+            }
+    } catch (e) {
+        throw e
+    }
+}
+
 export async function getWrappers() {
     const [rows] = await pool.query(`
     SELECT * FROM wrappers

@@ -1,0 +1,11 @@
+|| Connect to instance ||
+1. through WSL, cd to /Users/andre/OneDrive/Documents/ssh/todo app
+2. run the following command:
+    ssh -i "todo-app.pem" ubuntu@ec2-3-145-173-160.us-east-2.compute.amazonaws.com
+
+
+|| Update App, Send Dir Contents/Changes ||
+1. through WSL, cd to /mnt/c/users/andre/OneDrive/Documents/Node-Ex-React
+2. rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.env' --exclude '.txt' --exclude '.gitignore' \
+ssh -i '>   -e "ssh -i '/mnt/c/Users/andre/OneDrive/Documents/ssh/todo app/todo-app.pem'" \
+>   . ubuntu@ec2-3-145-173-160.us-east-2.compute.amazonaws.com:~/app

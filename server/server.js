@@ -2,7 +2,7 @@ import express from 'express'
 import { getTasks, addTask, 
     deleteTask, getWrappers, 
     getJournals, addJournal,
-    createList, removeList } from './database.js'
+    createList, removeList, login } from './database.js'
 const app = express()
 
 app.use(express.json())
@@ -35,6 +35,22 @@ app.get("/getJournals", async (req, res) => {
         ...log
     }))
     res.json(formattedResponse)
+})
+
+app.post('/login', async (req, res) => {
+    try {
+        const { user } = req.body
+        const response = await login(user)
+        if (!response) {
+            console.error("Invalid Credentials")
+            res.status(401).json(null)
+        } else {
+            res.json(response)
+        }
+    } catch (e) {
+        console.error(e)
+        res.status(500).json({ message: 'Internal Server Error' })
+    }
 })
 
 app.post("/createList", async (req, res) => {
@@ -70,14 +86,18 @@ app.post("/removeList", async (req, res) => {
 
 app.post("/addTodo", async (req, res) => {
     try {
-        const { todo, forDate, id } = req.body
+        let { todo, forDate, id } = req.body
+        if (!forDate) {
+            const currentDate = new Date().toISOString().split('T')[0]
+            forDate = currentDate
+        }
         await addTask(todo, forDate, id)
         const response = await getTasks()
         const formattedResponse = response.map(task => ({
             ...task,
             isEditing: !!task.isEditing
         }))
-        res.json(formattedResponse)
+        res.json(formattedResponse)  
     } catch (error) {
         console.error(error)
         res.status(400).json({ message: "error server side" })
@@ -110,6 +130,10 @@ app.post("/addJournal", async (req, res) => {
         console.error(error)
         res.status(400).json("Error getting journals")
     }
+})
+
+app.get('*', (req, res) => {
+    res.send("Route does not exist")
 })
  
 app.use((err, req, res, next) => {

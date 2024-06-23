@@ -68,3 +68,10 @@ VALUES ("School Main", "Classes"),
        ("Future Plans", "Long Term");
        
 DELETE FROM wrappers WHERE wrapperId > 3;
+
+select * from users;
+CREATE TABLE Users (
+	Username VARCHAR(30),
+    Pass VARCHAR(30),
+    Keyword VARCHAR(10)
+    );

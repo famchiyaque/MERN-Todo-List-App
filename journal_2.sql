@@ -5,7 +5,8 @@ select * from journalLogs;
 CREATE TABLE journalLogs (
 	journalId INT PRIMARY KEY AUTO_INCREMENT,
     journalContent VARCHAR(400),
-    journalDate DATE
+    journalDate DATETIME,
+    journalTitle VARCHAR(60)
 );
     
 ALTER TABLE journalLogs
@@ -17,5 +18,5 @@ SET journalTitle = "First" WHERE journalId = 1;
 ALTER TABLE journalLogs
 ADD COLUMN journalTitle VARCHAR(60);
     
-INSERT INTO journalLogs (journalContent, journalDate)
-VALUES ("First log for testing", NOW());
+INSERT INTO journalLogs (journalContent, journalDate, journalTitle)
+VALUES ("First log for testing", NOW(), "First");

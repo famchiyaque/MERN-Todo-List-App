@@ -1,5 +1,0 @@
-|| Connect to instance ||
-1. through WSL, cd to Documents/ssh/todo app
-2. run the following command:
-    ssh -i "todo-app.pem" ubuntu@ec2-3-145-173-160.us-east-2.compute.amazonaws.com
-    
